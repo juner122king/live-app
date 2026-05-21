@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: live-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/live_app
+    username: live
+    password: live123
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+app:
+  rtmp-base-url: rtmp://10.0.2.2:1935/live
+  hls-base-url: http://10.0.2.2:8080/hls
