@@ -20,5 +20,5 @@ spring:
     locations: classpath:db/migration
 
 app:
-  rtmp-base-url: rtmp://10.0.2.2:1935/live
-  hls-base-url: http://10.0.2.2:8080/hls
+  rtmp-base-url: ${LIVE_RTMP_BASE_URL:rtmp://192.168.112.150:1935/live}
+  hls-base-url: ${LIVE_HLS_BASE_URL:http://192.168.112.150:8080/live}

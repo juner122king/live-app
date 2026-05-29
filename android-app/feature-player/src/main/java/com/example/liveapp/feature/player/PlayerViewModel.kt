@@ -15,6 +15,12 @@ data class PlayerUiState(
 class PlayerViewModel(
     private val playerController: Media3PlayerController,
 ) : ViewModel() {
+    init {
+        playerController.setOnPlaybackError { reason ->
+            _uiState.value = _uiState.value.copy(errorMessage = "播放失败：$reason")
+        }
+    }
+
     fun attachPlayerView(playerView: PlayerView) {
         playerController.attach(playerView)
     }
@@ -27,11 +33,12 @@ class PlayerViewModel(
     val uiState: StateFlow<PlayerUiState> = _uiState.asStateFlow()
 
     fun bindRoom(room: Room) {
-        _uiState.value = _uiState.value.copy(room = room)
+        _uiState.value = _uiState.value.copy(room = room, errorMessage = null)
         playerController.play(room.playUrl)
     }
 
     override fun onCleared() {
+        playerController.setOnPlaybackError(null)
         playerController.stop()
     }
 }

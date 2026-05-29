@@ -64,7 +64,7 @@ class RoomService(
         coverUrl = coverUrl,
         streamKey = streamKey,
         pushUrl = "${streamProperties.rtmpBaseUrl}/$streamKey",
-        playUrl = playUrl,
+        playUrl = "${streamProperties.hlsBaseUrl}/$streamKey.m3u8",
         status = status,
     )
 }

@@ -21,7 +21,7 @@ class RoomServiceTest {
     private val repository: RoomJpaRepository = mock()
     private val streamProperties = StreamProperties(
         rtmpBaseUrl = "rtmp://10.0.2.2:1935/live",
-        hlsBaseUrl = "http://10.0.2.2:8080/hls"
+        hlsBaseUrl = "http://10.0.2.2:8080/live"
     )
 
     @Test
@@ -40,7 +40,30 @@ class RoomServiceTest {
         assertEquals(LiveStatus.OFFLINE, room.status)
         assertNotNull(room.streamKey)
         assertEquals("rtmp://10.0.2.2:1935/live/${room.streamKey}", room.pushUrl)
-        assertEquals("http://10.0.2.2:8080/hls/${room.streamKey}.m3u8", room.playUrl)
+        assertEquals("http://10.0.2.2:8080/live/${room.streamKey}.m3u8", room.playUrl)
+    }
+
+    @Test
+    fun `getRoom returns play url derived from current hls base url`() {
+        val service = RoomService(repository, streamProperties)
+        whenever(repository.findById(1L)).thenReturn(
+            Optional.of(
+                RoomEntity(
+                    id = 1L,
+                    title = "Room 1",
+                    coverUrl = "https://example.com/1.jpg",
+                    streamKey = "stream-1",
+                    playUrl = "http://10.0.2.2:8080/hls/stream-1.m3u8",
+                    status = LiveStatus.LIVE,
+                    createdAt = java.time.LocalDateTime.now(),
+                    updatedAt = java.time.LocalDateTime.now(),
+                )
+            )
+        )
+
+        val room = service.getRoom(1L)
+
+        assertEquals("http://10.0.2.2:8080/live/stream-1.m3u8", room.playUrl)
     }
 
     @Test
