@@ -2,14 +2,13 @@ package com.example.liveapp.feature.publish
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.widget.FrameLayout
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -27,6 +26,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.liveapp.core.model.Room
+import com.pedro.library.view.OpenGlView
 
 @Composable
 fun PublishScreen(
@@ -68,9 +68,9 @@ fun PublishScreen(
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp),
-                factory = { frameContext ->
-                    FrameLayout(frameContext).also(viewModel::attachPreview)
+                    .aspectRatio(9f / 16f),
+                factory = { ctx ->
+                    OpenGlView(ctx).also(viewModel::attachPreview)
                 }
             )
         } else {
@@ -85,10 +85,20 @@ fun PublishScreen(
                 Text("请求相机和麦克风权限")
             }
         }
-        Text(text = if (state.isLive) "直播中" else "未开播")
+        Text(
+            text = when {
+                state.isLive -> "直播中"
+                state.isConnecting -> "连接中"
+                else -> "未开播"
+            }
+        )
         state.errorMessage?.let { Text(text = it) }
-        Button(onClick = viewModel::startLive, modifier = Modifier.fillMaxWidth(), enabled = permissionsGranted) {
-            Text("开始直播")
+        Button(
+            onClick = viewModel::startLive,
+            modifier = Modifier.fillMaxWidth(),
+            enabled = permissionsGranted && !state.isConnecting && !state.isLive
+        ) {
+            Text(if (state.isConnecting) "连接中" else "开始直播")
         }
         Button(onClick = viewModel::stopLive, modifier = Modifier.fillMaxWidth()) {
             Text("结束直播")

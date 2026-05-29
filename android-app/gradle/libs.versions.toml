@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.3"
-kotlin = "2.0.21"
+kotlin = "2.3.0"
 composeBom = "2024.12.01"
 activityCompose = "1.9.3"
 lifecycle = "2.8.7"
@@ -34,7 +34,7 @@ media3-exoplayer-hls = { module = "androidx.media3:media3-exoplayer-hls", versio
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 media3-ui-compose = { module = "androidx.media3:media3-ui-compose", version.ref = "media3" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-nodemedia = { module = "com.github.NodeMedia:NodeMediaClient-Android", version = "4.1.5" }
+rootencoder = { module = "com.github.pedroSG94.RootEncoder:library", version = "2.7.2" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

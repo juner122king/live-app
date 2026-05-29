@@ -6,7 +6,7 @@ import com.example.liveapp.core.network.repository.RoomRepository
 import com.example.liveapp.feature.createroom.CreateRoomViewModel
 import com.example.liveapp.feature.player.Media3PlayerController
 import com.example.liveapp.feature.player.PlayerViewModel
-import com.example.liveapp.feature.publish.NodeMediaPublisherController
+import com.example.liveapp.feature.publish.RtmpPublisherController
 import com.example.liveapp.feature.publish.PublishViewModel
 import com.example.liveapp.feature.roomlist.RoomListViewModel
 
@@ -20,7 +20,7 @@ fun roomListViewModelFactory(roomRepository: RoomRepository): ViewModelProvider.
 
 fun publishViewModelFactory(
     roomRepository: RoomRepository,
-    publisherController: NodeMediaPublisherController,
+    publisherController: RtmpPublisherController,
 ): ViewModelProvider.Factory = simpleFactory {
     PublishViewModel(roomRepository, publisherController)
 }

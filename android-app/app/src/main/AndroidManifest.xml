@@ -11,6 +11,8 @@
         android:allowBackup="true"
         android:label="Live App"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.LiveApp">
         <activity
             android:name=".MainActivity"

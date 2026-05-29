@@ -10,17 +10,30 @@ android {
     buildFeatures { buildConfig = true }
     buildTypes {
         release {
-            buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8081/api/\"")
+            buildConfigField(
+                "String",
+                "API_BASE_URL",
+                "\"${providers.gradleProperty("liveApiBaseUrl").get()}\""
+            )
         }
         debug {
-            buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8081/api/\"")
+            buildConfigField(
+                "String",
+                "API_BASE_URL",
+                "\"${providers.gradleProperty("liveApiBaseUrl").get()}\""
+            )
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions { jvmTarget = "17" }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
 }
 
 dependencies {

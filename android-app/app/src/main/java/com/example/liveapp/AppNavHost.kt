@@ -13,7 +13,7 @@ import com.example.liveapp.feature.createroom.CreateRoomViewModel
 import com.example.liveapp.feature.player.Media3PlayerController
 import com.example.liveapp.feature.player.PlayerScreen
 import com.example.liveapp.feature.player.PlayerViewModel
-import com.example.liveapp.feature.publish.NodeMediaPublisherController
+import com.example.liveapp.feature.publish.RtmpPublisherController
 import com.example.liveapp.feature.publish.PublishScreen
 import com.example.liveapp.feature.publish.PublishViewModel
 import com.example.liveapp.feature.roomlist.RoomListScreen
@@ -36,7 +36,7 @@ fun AppNavHost(navController: NavHostController) {
     val publishViewModel = remember {
         PublishViewModel(
             appContainer.roomRepository,
-            NodeMediaPublisherController(context)
+            RtmpPublisherController(context)
         )
     }
     val playerViewModel = remember { PlayerViewModel(Media3PlayerController(context)) }
